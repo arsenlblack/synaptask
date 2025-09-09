@@ -41,18 +41,26 @@ const config: Config = {
   ],
 
   themeConfig: {
+    colorMode: {
+      defaultMode: 'dark',
+      disableSwitch: false,
+      respectPrefersColorScheme: false,
+    },
     image: 'img/social-card.png',
     navbar: {
       title: 'SynapTask',
       logo: { alt: 'SynapTask', src: 'img/logo.svg' },
       items: [
         { type: 'docSidebar', sidebarId: 'tutorialSidebar', label: 'Docs', position: 'left' },
-        { href: 'https://github.com/arsenlblack/synaptask', label: 'GitHub', position: 'right' },
+        { href: 'https://synaptask.space', label: 'App', position: 'right' },
       ],
     },
     footer: {
       style: 'dark',
-      links: [{ title: 'Docs', items: [{ label: 'Introduction', to: '/docs/intro' }] }],
+      links: [
+        { title: 'Docs', items: [{ label: 'Introduction', to: '/intro' }] },
+        { title: 'App', items: [{ label: 'SynapTask.Space', to: 'https://synaptask.space' }] },
+      ],
       copyright: `© ${new Date().getFullYear()} SynapTask.`,
     },
     prism: { theme: prismThemes.github, darkTheme: prismThemes.dracula },
