@@ -83,4 +83,4 @@ Code snippets and configuration examples are provided under the MIT license.
 
 ---
 
-<p align="center"> Made with ❤️ by the SynapTask team </p> ```
+<p align="center"> Made with ❤️ by the SynapTask team </p>
