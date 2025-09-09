@@ -46,16 +46,13 @@ const config: Config = {
       title: 'SynapTask',
       logo: { alt: 'SynapTask', src: 'img/logo.svg' },
       items: [
-        { type: 'docSidebar', sidebarId: 'tutorialSidebar', position: 'left', label: 'Docs' },
-        { href: 'https://github.com/synaptask-space/synaptask', label: 'GitHub', position: 'right' },
+        { type: 'docSidebar', sidebarId: 'tutorialSidebar', label: 'Docs', position: 'left' },
+        { href: 'https://github.com/arsenlblack/synaptask', label: 'GitHub', position: 'right' },
       ],
     },
     footer: {
       style: 'dark',
-      links: [
-        { title: 'Docs', items: [{ label: 'Introduction', to: '/docs/intro' }] },
-        { title: 'More', items: [{ label: 'GitHub', href: 'https://github.com/synaptask-space/synaptask' }] },
-      ],
+      links: [{ title: 'Docs', items: [{ label: 'Introduction', to: '/docs/intro' }] }],
       copyright: `© ${new Date().getFullYear()} SynapTask.`,
     },
     prism: { theme: prismThemes.github, darkTheme: prismThemes.dracula },
