@@ -14,4 +14,4 @@ Here you’ll find everything about:
 - 🔗 Links and dependencies  
 - 👥 Access levels (owner, admin, editor, viewer)  
 
-👉 Start with the [API Overview](./api/overview).
+👉 Start with the [Authentication](./api/authentication).

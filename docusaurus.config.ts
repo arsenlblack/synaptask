@@ -30,7 +30,7 @@ const config: Config = {
         docs: {
           sidebarPath: './sidebars.ts',
           routeBasePath: '/',
-          editUrl: 'https://github.com/synaptask-space/synaptask/edit/main/docs/',
+          editUrl: 'https://github.com/arsenlblack/synaptask/edit/main/',
           showLastUpdateAuthor: true,
           showLastUpdateTime: true,
         },

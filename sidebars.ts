@@ -7,7 +7,7 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'API',
-      items: ['api/overview','api/auth','api/branch','api/node'],
+      items: ['api/authentication'],
     },
   ],
 
