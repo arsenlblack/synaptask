@@ -5,10 +5,6 @@ slug: /concepts/history
 
 History in SynapTask provides undo/redo and auditing.
 
-## Entities
-- **HistoryBatch**: groups a set of operations (scope user or branch).
-- **HistoryOp**: single atomic change (node, link, grant, user).
-
 ## Behavior
 - Each mutation creates a batch with forward & inverse patches.
 - Undo re-applies inverse patches.

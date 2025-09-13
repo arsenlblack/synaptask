@@ -11,10 +11,10 @@ Links connect two nodes in the graph.
 - **target**: NodeID (to, parent, supertask)
 - **type**: integer (0=primary, 1=secondary)
 - **wasBlocker**: bool (auto becomes true once on primary links when source blocks target; auto becomes false once type turn into secondary or target status turns into Complited)
-- **InTrash**: bool
+- **inTrash**: bool
 - **version**: integer (for history guard)
 - **createdTime**: utc timestamp
-- **LastEditedTime**: utc timestamp
+- **lastEditedTime**: utc timestamp
 
 ## Active links
 A link is considered active only if:

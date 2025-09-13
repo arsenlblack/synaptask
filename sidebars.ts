@@ -20,6 +20,7 @@ const sidebars: SidebarsConfig = {
         'concepts/links',
         'concepts/accesses',
         'concepts/history',
+        'concepts/trash',
       ],
     },
     {

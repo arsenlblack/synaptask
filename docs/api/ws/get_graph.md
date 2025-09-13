@@ -154,4 +154,4 @@ def disconnect():
 sio.connect(API_URL, auth={"api_token": API_TOKEN}, transports=["websocket"], wait_timeout=10)
 sio.wait()
 ```
-See also: [REST get_graph](../rest/get_graph.md).
+See also: [REST /api/graph](../rest/get_graph.md).

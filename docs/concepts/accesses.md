@@ -6,14 +6,11 @@ slug: /concepts/accesses
 Access rules define who can see and interact with nodes.
 
 ## Model
-- **GrantedTo**: user receiving access
-- **NodeID**: node shared
-- **GrantedBy**: user granting
-- **Level**: integer (1=admin, 2=editor, 3=view)
-- **Showing**: bool, whether the node is visible in recipient’s graph
-- **Branch**: bool, whether the entire downstream branch is granted
-- **CreatedTime**: utc timestamp
-- **LastEditedTime**: utc timestamp
+- **Granted by**: username (user@email.com)
+- **Granted to**: username (user@email.com)
+- **Shared node**: Title
+- **Level**: admin, editor, viewer
+- **As branch**: whether the entire downstream branch is granted
 
 ## Rules
 - Multiple grants can exist; the **highest privilege wins** (lowest Level value).
