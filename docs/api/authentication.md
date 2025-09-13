@@ -19,14 +19,8 @@ All API and WebSocket interactions require authentication.
 
 ## Generating a Token
 
-Users can generate API tokens from the **Account Settings → API Tokens** page.  
-Each token has:
-- **ID** (for management & revocation)  
-- **Value** (used in API calls)  
-- **Created time**  
-- **Last used time**  
-
-Tokens are stored in hashed form server-side (HMAC with server secret).
+Users can generate API tokens from the **Account Settings → API Tokens** section.  
+The plaintext value is displayed once at creation and cannot be retrieved later.
 
 
 ## Using Tokens
@@ -49,12 +43,14 @@ curl -X GET https://synaptask.space/api/nodes \
 
 ### WebSockets
 
-Provide the API token in the connection query string:
+When connecting with Socket.IO, provide the API token in the `auth` payload:
 
+```js
+const socket = io(SERVER_URL, {
+  transports: ['websocket'],
+  auth: { api_token: '<api_token>' }
+});
 ```
-wss://synaptask.space/socket.io/?token=<api_token>
-```
-
 Or send as a header if your client supports it:
 
 ```
@@ -64,7 +60,7 @@ Sec-WebSocket-Protocol: Bearer, st_xxxxxxxxxxxxxxxxxxxx
 
 ## Access Levels
 
-Access is enforced per node, based on the `Accesses` table.  
+Access is enforced per node.  
 Tokens inherit the access rights of the user who generated them.
 
 | Constant        | Value | Capabilities |
@@ -93,6 +89,25 @@ Common codes:
 | 401  | `unauthorized`     | Missing/invalid API token |
 | 403  | `forbidden`        | Token valid but insufficient access level |
 | 409  | `version_conflict` | Update attempted with stale `Version` guard |
+
+
+## Rate Limits
+
+All API and WebSocket methods are rate limited.  
+If a limit is exceeded, the server responds with HTTP 429 (REST) or emits a `rate_limited` event (WebSocket).
+
+### Global defaults
+
+| Scope              | Limit                  |
+|--------------------|------------------------|
+| REST (default)     | 200 requests / hour    |
+| WS connect (per IP)| 10 connects / minute   |
+
+### Notes
+- Each method may define its own stricter limits (e.g. `/login`, `/graph`).  
+- Method-specific limits are documented on the corresponding method’s page.  
+- Rate limits are per **user** (for authenticated requests), except WS connect which is per **IP**.  
+- Exceeding the limit results in `429 Too Many Requests` or a `rate_limited` event.
 
 
 ## Security Notes
