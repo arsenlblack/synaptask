@@ -9,24 +9,31 @@ Nodes are the fundamental units in SynapTask — tasks, cards, documents, or ide
 - **id**: unique UUID
 - **title**: short string
 - **description**: string
-- **status**: integer (0=Available; 1=InProgres; 2=Blocked - auuto change, when at least 1 child node, connected with primary link, have status not 3; 3=Complted)
-- **dueDate**: optional timestamp
+- **status**: integer  
+  - `0 = Available`  
+  - `1 = InProgress`  
+  - `2 = Blocked` — auto-set when a node has at least one child connected via a **primary link (type=0)** whose status is **not 3**  
+  - `3 = Completed`
+- **dueDate**: optional UTC timestamp (ISO 8601, `...Z`)
 - **type**: integer (custom type/category)
 - **tags**: string (comma-separated)
-- **volume**: integer (visual size, i`m using for mark priority)
-- **version**: integer (incremented on changes for history guard)
-- **asignee**: json (list of names, mails or usernames)
-- **createdTime**: utc timestamp
-- **lastEditedTime**: utc timestamp
+- **priority**: integer `0–9`
+- **dependant**: boolean (whether the node can be blocked by downstream dependencies)
+- **volume**: integer (visual size; also used to hint priority in layout)
+- **version**: integer (increments on changes; used as history/optimistic locking guard)
+- **asignee**: JSON array of strings (names, emails, or usernames), e.g. `["jane@x.com", "john"]`
+- **createdTime**: UTC timestamp (ISO 8601, `...Z`)
+- **lastEditedTime**: UTC timestamp (ISO 8601, `...Z`)
 - **ownerUsername**: short string
 - **ownerEmail**: short string
-- **PublicToken**: short string (for public sharing in https://synaptask.space/branch/{PublicToken})
+- **publicToken**: short string (for public sharing via `https://synaptask.space/branch/{publicToken}`)
 - **x**: float (x coordinate in graph space)
 - **y**: float (y coordinate in graph space)
 - **z**: float (z coordinate in graph space)
-- **pinned**: bool, whether graph physics will affect coordinates
-- **collapsed**: json, whether the entire downstream branch will be shown in graph
-- **access**: integer (0=owner, 1=admin, 2=editor, 3=viewer)
+- **pinned**: boolean — whether graph physics affect coordinates
+- **collapsed**: boolean — whether the downstream branch is collapsed in the graph
+- **access**: integer (ACL)  
+  - `0 = owner`, `1 = admin`, `2 = editor`, `3 = viewer`
 
 
 

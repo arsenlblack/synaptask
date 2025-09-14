@@ -22,6 +22,7 @@ Request part of the user’s graph over WebSocket.
 #### Success
 ```json
 {
+  "ok": true,
   "hasMore": true,
   "graph": {
     "nodes": [
@@ -33,22 +34,22 @@ Request part of the user’s graph over WebSocket.
         "dueDate": "2025-09-13T10:00:00Z",
         "type": 0,
         "tags": "csv",
+        "priority": 5,
+        "dependant": true,
         "volume": 5,
         "version": 0,
         "asignee": [],
         "createdTime": "2025-09-13T10:00:00Z",
         "lastEditedTime": "2025-09-13T10:00:00Z",
         "ownerUsername": "BLACK",
-        "ownerEmail": "mail@synaptask.space",
+        "ownerEmail": "black@synaptask.space",
         "publicToken": "string",
         "x": 0.0,
         "y": 0.0,
         "z": 0.0,
         "pinned": false,
         "collapsed": false,
-        "access": 0,     
-        "ownerUsername": "BLACK",
-        "ownerEmail": "black@synaptask.space",
+        "access": 0
       }
     ],
     "links": [
@@ -58,7 +59,7 @@ Request part of the user’s graph over WebSocket.
         "target": "nodeId",
         "type": 0,
         "version": 0,
-        "wasBlocker": false,
+        "wasBlocker": false
       }
     ]
   }
