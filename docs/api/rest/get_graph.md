@@ -50,7 +50,9 @@ Retrieve the graph visible to the authenticated user.
         "z": 0.0,
         "pinned": false,
         "collapsed": false,
-        "access": 0,     
+        "access": 0,
+        "ownerUsername": "BLACK",
+        "ownerEmail": "black@synaptask.space",
       }
     ],
     "links": [

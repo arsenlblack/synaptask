@@ -47,6 +47,8 @@ Request part of the user’s graph over WebSocket.
         "pinned": false,
         "collapsed": false,
         "access": 0,     
+        "ownerUsername": "BLACK",
+        "ownerEmail": "black@synaptask.space",
       }
     ],
     "links": [
