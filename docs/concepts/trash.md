@@ -1,6 +1,6 @@
 ---
 title: Trash
-slug: /concepts/nodes
+slug: /concepts/trash
 ---
 
 The **Trash** is a temporary storage area for nodes and links that have
