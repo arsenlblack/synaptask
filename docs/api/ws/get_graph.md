@@ -17,7 +17,7 @@ Request part of the user’s graph over WebSocket.
 ```
 
 
-### Server → Client `graph:init`
+### Server → Client `graph:page`
 
 #### Success
 ```json
@@ -68,11 +68,11 @@ Request part of the user’s graph over WebSocket.
 
 #### Error `graph:error`
 ```
-{ "error": "internal" }
+{ "ok": false, "error": "bad_request.out_of_range", "message": "limit/offset out of range" }
 ```
 
 ## Rate Limits
-- `10 / 10s` per user.
+- `5 / 10s` per user.
 
 ## Example (JavaScript)
 ```js
@@ -82,7 +82,7 @@ socket.emit('graph:get', { limit: 1000, offset: 0 });
 let allNodes = [];
 let allLinks = [];
 
-socket.on('graph:init', (data) => {
+socket.on('graph:page', (data) => {
   console.log('Received graph chunk:', data);
 
   // Append received chunk
@@ -90,8 +90,8 @@ socket.on('graph:init', (data) => {
   allLinks.push(...(data.graph.links || []));
 
   // If there are more pages – request next
-  if (data.graph.hasMore) {
-    const nextOffset = allNodes.length;
+  if (data.hasMore) {
+    offset += limit;
     socket.emit('graph:get', { limit: 1000, offset: nextOffset });
   } else {
     console.log('Graph fully loaded');
@@ -122,7 +122,7 @@ def connect():
     # тільки після connect() — перший emit
     sio.emit("graph:get", {"limit": limit, "offset": offset})
 
-@sio.on("graph:init")
+@sio.on("graph:page")
 def on_graph(data):
     global offset
     graph = data.get("graph", {})
@@ -133,7 +133,7 @@ def on_graph(data):
     all_links.extend(links)
     print(f"chunk: +{len(nodes)} nodes, +{len(links)} links (offset={offset})")
 
-    if graph.get("hasMore"):
+    if data.get("hasMore"):
         offset += limit
         sio.emit("graph:get", {"limit": limit, "offset": offset})
     else:

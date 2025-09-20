@@ -18,7 +18,7 @@ const sidebars: SidebarsConfig = {
       items: [
         'concepts/nodes',
         'concepts/links',
-        'concepts/accesses',
+        'concepts/account',
         'concepts/history',
         'concepts/trash',
       ],
@@ -31,12 +31,22 @@ const sidebars: SidebarsConfig = {
         {
           type: 'category',
           label: 'WebSocket',
-          items: ['api/ws/connect', 'api/ws/get_graph'],
+          items: [
+            'api/ws/connect',
+            'api/ws/get_graph',
+            'api/ws/node_add',
+            'api/ws/link_add',
+          ],
         },
         {
           type: 'category',
           label: 'REST',
-          items: ['api/rest/get_graph'],
+          items: [
+            'api/rest/get_graph',
+            'api/rest/get_health',
+            'api/rest/post_node',
+            'api/rest/post_link',
+          ],
         },
       ],
     },

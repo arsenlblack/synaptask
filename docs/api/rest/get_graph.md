@@ -16,7 +16,7 @@ Retrieve the graph visible to the authenticated user.
 ## REST API
 **Endpoint:** `GET /api/graph`  
 **Auth:** API token  
-**Rate limit:** `60/minute`
+**Rate limit:** `30/minute`
 
 **Query parameters:**
 - `limit` *(int, optional, default=1000)* — max number of records (nodes+links).
@@ -98,7 +98,7 @@ async function fetchGraph(apiBaseUrl, apiToken) {
     allNodes.push(...(graph.nodes || []));
     allLinks.push(...(graph.links || []));
 
-    if (graph.hasMore) {
+    if (data.hasMore) {
       offset += limit;
     } else {
       break;

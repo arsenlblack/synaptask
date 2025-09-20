@@ -93,7 +93,7 @@ Common codes:
 
 ## Rate Limits
 
-All API and WebSocket methods are rate limited.  
+All API and WebSocket methods are rate limited. REST: ~2000/hour ws: ~1/sec
 If a limit is exceeded, the server responds with HTTP 429 (REST) or emits a `rate_limited` event (WebSocket).
 
 ### Global defaults
