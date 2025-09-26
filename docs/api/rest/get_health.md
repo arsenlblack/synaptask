@@ -42,7 +42,10 @@ Exceeding these limits will result in a `429 Too Many Requests` response.
 
 ### Error
 
-This endpoint is designed to be extremely reliable. Errors may occur only in cases of severe misconfiguration or internal failures. In such cases, expect a response in the following format:
+This endpoint is designed to be extremely reliable. Errors may occur only in cases of severe misconfiguration or internal failures.
+
+* **Status Code:** `500 Internal Server Error`
+* **Body:**
 
 ```json
 {

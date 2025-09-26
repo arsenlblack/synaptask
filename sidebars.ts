@@ -50,15 +50,6 @@ const sidebars: SidebarsConfig = {
         },
       ],
     },
-    {
-      type: 'category',
-      label: 'Guides',
-      items: [
-        'guides/fetch-graph',
-        'guides/create-node',
-        'guides/share-access',
-      ],
-    },
   ],
 };
 

@@ -3,23 +3,23 @@ title: GET /api/graph
 slug: /api/rest/get_graph
 ---
 
-Retrieve the graph visible to the authenticated user.
+Retrieve the portion of the task graph visible to the authenticated user.
 
 ## Visibility Rules
 - **Own nodes** of the user.
-- **Public nodes** via `publicToken` generating.
+- **Public nodes** accessible via a `publicToken`.
 - **Shared nodes** via `accesses` with `Showing = true`.
-- If an access node has `Branch = true`, include the entire **downstream branch** reachable by **outbound links** from `NodeID` (until exhaustion).
-- **Access level per node** is the **highest** among all grants (`0=owner, 1=admin, 2=editor, 3=viewer` — lower is higher privilege).
+- If an access grant has `Branch = true`, include the entire subtree of descendants reachable via outbound links.
+- **Access level per node** is the **maximum privilege granted**: `0=owner`, `1=admin`, `2=editor`, `3=viewer` (where 0 is the highest privilege).
 - Links are returned **only between visible nodes**.
 
 ## REST API
 **Endpoint:** `GET /api/graph`  
-**Auth:** API token  
-**Rate limit:** `30/minute`
+**Auth:** Bearer API token (`Authorization: Bearer <token>`)
+**Rate limit:** 30 requests per minute
 
 **Query parameters:**
-- `limit` *(int, optional, default=1000)* — max number of records (nodes+links).
+- `limit` *(int, optional, default=1000, max=5000)* — max number of records (nodes+links).
 - `offset` *(int, optional, default=0)* — offset for pagination.
 
 **200 OK**
@@ -36,12 +36,12 @@ Retrieve the graph visible to the authenticated user.
         "status": 0,
         "dueDate": "2025-09-13T10:00:00Z",
         "type": 0,
-        "tags": "csv",
+        "tags": ["backend", "urgent"],
         "priority": 5,
         "dependant": true,
         "volume": 5,
         "version": 0,
-        "asignee": [],
+        "assignee": [],
         "createdTime": "2025-09-13T10:00:00Z",
         "lastEditedTime": "2025-09-13T10:00:00Z",
         "ownerUsername": "BLACK",
@@ -52,14 +52,15 @@ Retrieve the graph visible to the authenticated user.
         "z": 0.0,
         "pinned": false,
         "collapsed": false,
-        "access": 0
+        "access": 0,
+        "shareRoots": ["uuid1", "uuid2"]
       }
     ],
     "links": [
       {
         "id": "uuid",
-        "source": "nodeId",
-        "target": "nodeId",
+        "source": "uuid",
+        "target": "uuid",
         "type": 0,
         "version": 0,
         "wasBlocker": false
@@ -68,9 +69,9 @@ Retrieve the graph visible to the authenticated user.
   }
 }
 ```
-**Errors:** `401` unauthorized, `429` rate limited, `500` internal.
+**Errors:** `401` unauthorized, `429` rate limited, `500` internal, `400` bad_request — invalid limit/offset or malformed query params.
 
-## Expamle (JavaScript)
+## Example (JavaScript)
 ```js
 async function fetchGraph(apiBaseUrl, apiToken) {
   let allNodes = [];
@@ -119,7 +120,7 @@ fetchGraph('https://synaptask.space/api', '<YOUR_API_TOKEN>')
   })
   .catch(console.error);
 ```
-## Expamle (Python)
+## Example (Python)
 ```python
 import requests
 
@@ -157,7 +158,7 @@ while True:
 
     print(f"Received {len(nodes)} nodes, {len(links)} links (offset={offset})")
 
-    if graph.get("hasMore"):
+    if data.get("hasMore"):
         offset += limit
     else:
         break

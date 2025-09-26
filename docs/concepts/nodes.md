@@ -16,12 +16,12 @@ Nodes are the fundamental units in SynapTask — tasks, cards, documents, or ide
   - `3 = Completed`
 - **dueDate**: optional UTC timestamp (ISO 8601, `...Z`)
 - **type**: integer (custom type/category)
-- **tags**: string (comma-separated)
+- **tags**: JSON array of strings e.g. `["book", "red"]`
 - **priority**: integer `0–9`
 - **dependant**: boolean (whether the node can be blocked by downstream dependencies)
 - **volume**: integer (visual size; also used to hint priority in layout)
 - **version**: integer (increments on changes; used as history/optimistic locking guard)
-- **asignee**: JSON array of strings (names, emails, or usernames), e.g. `["jane@x.com", "john"]`
+- **assignee**: JSON array of strings (names, emails, or usernames), e.g. `["jane@x.com", "john"]`
 - **createdTime**: UTC timestamp (ISO 8601, `...Z`)
 - **lastEditedTime**: UTC timestamp (ISO 8601, `...Z`)
 - **ownerUsername**: short string
@@ -32,6 +32,7 @@ Nodes are the fundamental units in SynapTask — tasks, cards, documents, or ide
 - **z**: float (z coordinate in graph space)
 - **pinned**: boolean — whether graph physics affect coordinates
 - **collapsed**: boolean — whether the downstream branch is collapsed in the graph
+- **shareRoots**: array of UUIDs — all root nodes (shared or own) through which the current user has visibility to this node
 - **access**: integer (ACL)  
   - `0 = owner`, `1 = admin`, `2 = editor`, `3 = viewer`
 

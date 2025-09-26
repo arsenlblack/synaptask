@@ -9,10 +9,12 @@ Create a new node, optionally under a parent node.
 ## Behavior
 
 * If `target` is provided, the new node is attached as a child of the given parent.
+* If no target is provided, node is owned solely by the creator with full access by default.
 * ACL:
   * Caller must have at least **editor** access to the parent node.
   * New node **inherits** the owner and ACL from the parent node.
   * View-only is insufficient.
+  >
   :::info
   You can create a **stand-alone node** (without specifying `target`) 
   and later attach it to a read-only branch using [`POST /api/link`](./link_add). 
@@ -24,7 +26,7 @@ Create a new node, optionally under a parent node.
 
   This way, **you remain the owner** of the new node, while still preserving graph consistency and task dependencies.
   :::
-* A primary link (type=0) is created if the parent is `dependant=true`, otherwise a secondary link (type=1).
+* A primary link (type=0) is created if the parent is marked as `dependant=true`, otherwise a secondary link (type=1).
 * History batch records node creation, the link (if any) and all side effects like blocking parent (if any).
 
 ## REST API
@@ -38,19 +40,17 @@ Create a new node, optionally under a parent node.
 ```json
 {
   "target": "<uuid>",   // optional parent node id
-  "props": {
-    "title": "string",
-    "description": "string",
-    "status": 0,
-    "dueDate": "2025-09-13T10:00:00Z",
-    "tags": "csv",
-    "priority": 5,
-    "dependant": true,
-    "volume": 5,
-    "asignee": ["user-id"],
-    "pinned": false,
-    "collapsed": false
-  },
+  "title": "string",
+  "description": "string",
+  "status": 0,
+  "dueDate": "2025-09-13T10:00:00Z",
+  "tags": ["backend", "urgent"],
+  "priority": 5,
+  "dependant": true,
+  "volume": 5,
+  "assignee": ["user-id"],
+  "pinned": false,
+  "collapsed": false
 }
 ```
 
@@ -67,20 +67,22 @@ Create a new node, optionally under a parent node.
         "description": "string",
         "status": 0,
         "dueDate": "2025-09-13T10:00:00Z",
-        "tags": "csv",
+        "tags": ["backend", "urgent"],
         "priority": 5,
         "dependant": true,
         "volume": 5,
-        "asignee": [],
+        "assignee": ["user-id"],
         "pinned": false,
         "collapsed": false,
         "createdTime": "2025-09-13T10:00:00Z",
         "lastEditedTime": "2025-09-13T10:00:00Z",
-        "version": 0
+        "version": 0,
+        "shareRoots": ["uuid1", "uuid2"]
       },
-      { // blocket target
+      { // Blocked target (parent node / supertask)
         "id": "uuid",
-        "status": 2,
+        "status": 2,  // ← Minimal snapshot: only affected props
+        "version": 3,
       }
     ],
     "links": [
@@ -97,16 +99,24 @@ Create a new node, optionally under a parent node.
 }
 ```
 :::info
-The first object in nodes is the newly created node with all its properties.
+The diff includes the newly created node (with all props). Existing nodes that were affected are also included with minimal snapshots (only changed fields).
 Existing nodes that were modified as a side effect (e.g., a parent being blocked) are also included, but only with the updated fields.
+Each diff may include existing nodes with partial updates (only changed fields). Consumers must merge by id+version, not overwrite blindly.
 :::
-
-**Errors:** `400` bad request, `401` unauthorized, `403` forbidden, `404` parent not found, `429` rate limited, `500` internal.
+| Code | Error                    | Meaning                          |
+| ---- | ------------------------ | -------------------------------- |
+| 400  | `bad_request`            | Invalid payload                  |
+| 401  | `auth_missing`           | No token/auth header             |
+| 403  | `forbidden`              | ACL denied                       |
+| 404  | `not_found`              | Target node doesn’t exist        |
+| 409  | `conflict`               | Duplicate ID or version conflict |
+| 429  | `rate_limited`           | Too many requests                |
+| 500  | `internal.exception`     | Unexpected server failure        |
 
 ## Example (JavaScript)
 
 ```js
-async function createNode(apiBaseUrl, apiToken, props, superId) {
+async function createNode(apiBaseUrl, apiToken, payload, target) {
   const resp = await fetch(`${apiBaseUrl}/node`, {
     method: 'POST',
     headers: {
@@ -114,7 +124,7 @@ async function createNode(apiBaseUrl, apiToken, props, superId) {
       'Content-Type': 'application/json',
       'Accept': 'application/json'
     },
-    body: JSON.stringify({ props, superId })
+    body: JSON.stringify({ ...payload, target })
   });
 
   if (!resp.ok) {
@@ -139,7 +149,7 @@ import requests
 API_BASE = "https://synaptask.space/api"
 API_TOKEN = "<YOUR_API_TOKEN>"
 
-props = {
+payload = {
     "title": "My Task",
     "description": "A new task",
     "status": 0,
@@ -151,7 +161,7 @@ resp = requests.post(
         "Authorization": f"Bearer {API_TOKEN}",
         "Content-Type": "application/json"
     },
-    json={"props": props}
+    json=payload
 )
 
 if resp.status_code != 200:

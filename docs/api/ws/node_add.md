@@ -12,7 +12,8 @@ Create a new node via WebSocket event. Equivalent to `POST /api/node` in REST.
 * If a `target` (parent node) is provided:
   * User must have **editor** access on the parent.
   * New node **inherits** the owner and ACL from the parent node.
-  * `viewer` or `no access` → `forbidden` error.
+  * `viewer` or `no access` → `forbidden` error.  
+  >
   :::info
   You can create a **stand-alone node** (without specifying `target`)  
   and later attach it to a read-only branch using [`POST /api/link`](./link_add).  
@@ -24,38 +25,29 @@ Create a new node via WebSocket event. Equivalent to `POST /api/node` in REST.
 
   This way, **you remain the owner** of the new node, while still preserving graph consistency and task dependencies.
   :::
-* If no `target` is provided, node is created **standalone** under the caller’s ownership.
+* If no `target` is provided, node is created **stand-alone** under the caller’s ownership.
 * A primary link (type=0) is created if the parent is `dependant=true`, otherwise a secondary link (type=1).
 * History batch records node creation, the link (if any) and all side effects like blocking parent (if any).
 
-## Socket.IO Event
-
-**Client → Server:** `node:add`
-**Server → Client (success):** `node:added`
-**Server → Client (error):** `node:add:error`
-
-### Request Payload
-
+### Client → Server `node:add`
 ```json
 {
-  "target": "<uuid>",          // optional parent node id
-  "props": {
-    "title": "string",
-    "description": "string",
-    "status": 0,
-    "dueDate": "2025-09-13T10:00:00Z",
-    "tags": "csv",
-    "priority": 5,
-    "dependant": true,
-    "volume": 5,
-    "asignee": ["user1", "user2"],
-    "pinned": false,
-    "collapsed": false
-  }
+  "target": "<uuid>",     // optional parent node id
+  "title": "string",
+  "description": "string",
+  "status": 0,
+  "dueDate": "2025-09-13T10:00:00Z",
+  "tags": ["backend", "urgent"],
+  "priority": 5,
+  "dependant": true,
+  "volume": 5,
+  "assignee": ["user1", "user2"],
+  "pinned": false,
+  "collapsed": false
 }
 ```
 
-### Success Response (`node:added`)
+### Success (ack)
 
 ```json
 {
@@ -68,20 +60,21 @@ Create a new node via WebSocket event. Equivalent to `POST /api/node` in REST.
         "description": "string",
         "status": 0,
         "dueDate": "2025-09-13T10:00:00Z",
-        "tags": "csv",
+        "tags": ["backend", "urgent"],
         "priority": 5,
         "dependant": true,
         "volume": 5,
-        "asignee": [],
+        "assignee": [],
         "pinned": false,
         "collapsed": false,
         "createdTime": "2025-09-13T10:00:00Z",
         "lastEditedTime": "2025-09-13T10:00:00Z",
-        "version": 0
+        "version": 0,
+        "shareRoots": ["uuid1", "uuid2"]
       },
-      { // blocket target
+      { // blocked target (parent node / supertask)
         "id": "uuid",
-        "status": 2,
+        "status": 2,  // Partial snapshot: includes only fields changed as a result of the operation
       }
     ],
     "links": [
@@ -98,40 +91,46 @@ Create a new node via WebSocket event. Equivalent to `POST /api/node` in REST.
 }
 ```
 :::info
-The first object in nodes is the newly created node with all its properties.
+The diff includes the newly created node (with all props). Existing nodes that were affected are also included with minimal snapshots (only changed fields).
 Existing nodes that were modified as a side effect (e.g., a parent being blocked) are also included, but only with the updated fields.
+Each diff may include existing nodes with partial updates (only changed fields). Consumers must merge by id+version, not overwrite blindly.
 :::
 
-### Error Response (`node:add:error`)
+### Broadcasting (`graph:diff`)
+> This event is sent to other clients in the ACL room. The own client receives the ACK directly and is excluded for this event.
+
+### Error (ack)
 
 ```json
 {
   "ok": false,
-  "error": "bad_request" | "forbidden" | "internal" | "not_found" | "rate_limited",
+  "error": "bad_request" | "forbidden" | "internal.exception",
   "message": "<optional human-readable>"
 }
 ```
-
+| Error                    | Meaning                          |
+| ------------------------ | -------------------------------- |
+| `bad_request`            | Invalid payload                  |
+| `forbidden.auth_missing` | No token/auth header             |
+| `forbidden`              | ACL denied                       |
+| `not_found`              | Target node doesn’t exist        |
+| `conflict`               | Duplicate ID or version conflict |
+| `rate_limited`           | Too many requests                |
+| `internal.exception`     | Unexpected server failure        |
+:::info
+Each error can be specified by code (`namespace.reason`).
+:::
 ## Examples
 
 ### JavaScript
 
 ```js
-socket.emit("node:add", {
-  target: "123e4567-e89b-12d3-a456-426614174000",
-  props: {
-    title: "New task",
-    priority: 5,
-    dependant: true
+socket.emit("node:add", payload, (resp) => {
+  if (resp.ok) {
+    console.log("Node created", resp.diff);
+  } else {
+    console.error("Node creation failed", resp.error);
   }
-});
-
-socket.on("node:added", (data) => {
-  console.log("Node created:", data);
-});
-
-socket.on("node:add:error", (err) => {
-  console.error("Node add failed:", err);
 });
 ```
 
@@ -139,23 +138,13 @@ socket.on("node:add:error", (err) => {
 
 ```python
 import socketio
-
 sio = socketio.Client()
 
-@sio.event
-def connect():
-    print("Connected")
-
-@sio.on("node:added")
-def on_node_added(data):
-    print("Node created:", data)
-
-@sio.on("node:add:error")
-def on_node_error(err):
-    print("Node add failed:", err)
-
 sio.connect("https://synaptask.space", headers={"Authorization": "Bearer <API_TOKEN>"})
-sio.emit("node:add", {
-    "props": {"title": "Write WS docs", "priority": 3}
-})
+resp = sio.call("node:add", {"title": "Write WS docs", "priority": 3}, timeout=5)
+if resp.get("ok"):
+    print("Node created:", resp["diff"])
+else:
+    print("Failed:", resp["error"])
+
 ```

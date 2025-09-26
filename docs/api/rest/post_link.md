@@ -13,7 +13,7 @@ Create a new link between two nodes.
   * `1` → secondary link (non-blocking).
 * ACL:
   * For **secondary links**, caller must have at least **editor** access to source and **viewer** access to target.
-  * For **primary links**, caller must must have at least **editor** access on both.
+  * For **primary links**, caller must have at least **editor** access on both.
 * History batch records link creation and all side effects (e.g., cascading blocking of ancestors).
 
 ## REST API
@@ -52,7 +52,8 @@ Create a new link between two nodes.
       { // if blocking cascaded
         "id": "uuid",
         "status": 2,
-        "version": 5
+        "version": 5,
+        "shareRoots": ["root-uuid-1", "root-uuid-2"]
       }
     ]
   }
@@ -61,7 +62,14 @@ Create a new link between two nodes.
 * `links` — the created or updated link(s).
 * `nodes` — any nodes affected by cascade blocking (if primary link).
 
-**Errors:** `400` bad request, `401` unauthorized, `403` forbidden, `404` source/target not found, `409` duplicate link, `429` rate limited, `500` internal.
+**Errors:** 
+* `bad_request` (400),
+* `unauthorized` (401),
+* `forbidden` (403),
+* `not_found` (404),
+* `conflict` (409),
+* `rate_limited` (429),
+* `internal.exception` (500).
 
 ## Example (JavaScript)
 
