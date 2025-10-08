@@ -32,7 +32,7 @@ An **Account** represents a registered user and their entitlements.
 
 - Multiple grants may overlap; the **highest privilege wins** (lowest numeric Level).
 - Access can be revoked or hide.
-- Free plan: limited to **3 active income accesses**.
+- Basic plan: limited to **3 active income accesses**.
 - Plus plan or more: **unlimited income accesses**, no outcome.
 - Pro plan: **unlimited income and outcome accesses**.
 

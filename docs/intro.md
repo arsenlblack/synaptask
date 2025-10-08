@@ -6,12 +6,13 @@ slug: /intro
 
 # SynapTask Documentation
 
-Welcome to **SynapTask Docs**.  
-Here you’ll find everything about:
-
-- 🔐 Authentication & tokens  
+Welcome to **SynapTaskAPI Docs**.  
+Here you’ll find everything about API access to:
+ 
 - 🌿 Branch & node structure  
-- 🔗 Links and dependencies  
-- 👥 Access levels (owner, admin, editor, viewer)  
+- 🔗 Links & dependencies  
+- 👥 Publishing & access levels (owner, admin, editor, viewer)  
+- 📙 History  
+- 📜 Page & content  
 
 👉 Start with the [Quickstart](./getting-started/quickstart).

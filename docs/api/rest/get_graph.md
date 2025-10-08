@@ -1,9 +1,9 @@
 ---
-title: GET /api/graph
+title:  GET /api/graph (full graph)
 slug: /api/rest/get_graph
 ---
 
-Retrieve the portion of the task graph visible to the authenticated user.
+Retrieve the portion of the task graph visible to the authenticated user. Equivalent to [graph:get](/api/ws/get_graph) in WebSocket.
 
 ## Visibility Rules
 - **Own nodes** of the user.
@@ -16,7 +16,7 @@ Retrieve the portion of the task graph visible to the authenticated user.
 ## REST API
 **Endpoint:** `GET /api/graph`  
 **Auth:** Bearer API token (`Authorization: Bearer <token>`)
-**Rate limit:** 30 requests per minute
+**Rate limit:** 300 requests per minute
 
 **Query parameters:**
 - `limit` *(int, optional, default=1000, max=5000)* — max number of records (nodes+links).
@@ -38,7 +38,7 @@ Retrieve the portion of the task graph visible to the authenticated user.
         "type": 0,
         "tags": ["backend", "urgent"],
         "priority": 5,
-        "dependant": true,
+        "dependent": true,
         "volume": 5,
         "version": 0,
         "assignee": [],
@@ -47,6 +47,7 @@ Retrieve the portion of the task graph visible to the authenticated user.
         "ownerUsername": "BLACK",
         "ownerEmail": "black@synaptask.space",
         "publicToken": "string",
+        "publicDue": "2026-09-13T10:00:00Z",
         "x": 0.0,
         "y": 0.0,
         "z": 0.0,
@@ -69,7 +70,7 @@ Retrieve the portion of the task graph visible to the authenticated user.
   }
 }
 ```
-**Errors:** `401` unauthorized, `429` rate limited, `500` internal, `400` bad_request — invalid limit/offset or malformed query params.
+**Errors:** see **[error codes](/api/error-codes)**
 
 ## Example (JavaScript)
 ```js

@@ -3,8 +3,6 @@ title: GET /api/health
 slug: /api/rest/get_health
 ---
 
-# Healthcheck Endpoint
-
 ## Overview
 
 The healthcheck endpoint provides a lightweight liveness probe to verify that the API service is running and responsive. It does not require authentication and is safe to use for infrastructure-level monitoring.

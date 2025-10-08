@@ -1,10 +1,9 @@
 ---
-
 title: POST /api/node
-slug: /api/rest/post_node
+slug: /api/rest/node/add
 ---
 
-Create a new node, optionally under a parent node.
+Create a new node, optionally under a parent node. Equivalent to [node:add](/api/ws/node/add) in WebSocket.
 
 ## Behavior
 
@@ -26,14 +25,14 @@ Create a new node, optionally under a parent node.
 
   This way, **you remain the owner** of the new node, while still preserving graph consistency and task dependencies.
   :::
-* A primary link (type=0) is created if the parent is marked as `dependant=true`, otherwise a secondary link (type=1).
+* A primary link (type=0) is created if the parent is marked as `dependent=true`, otherwise a secondary link (type=1).
 * History batch records node creation, the link (if any) and all side effects like blocking parent (if any).
 
 ## REST API
 
 **Endpoint:** `POST /api/node`
 **Auth:** API token
-**Rate limit:** `30/minute`
+**Rate limit:** 300 requests per minute
 
 **Request body:**
 
@@ -46,7 +45,7 @@ Create a new node, optionally under a parent node.
   "dueDate": "2025-09-13T10:00:00Z",
   "tags": ["backend", "urgent"],
   "priority": 5,
-  "dependant": true,
+  "dependent": true,
   "volume": 5,
   "assignee": ["user-id"],
   "pinned": false,
@@ -60,41 +59,72 @@ Create a new node, optionally under a parent node.
 {
   "ok": true,
   "diff": {
+    "batchId": "uuid",                // ID of the history batch
+    "actor": {
+      "username": "alice",
+      "email": "alice@example.com"
+    },
+    "ts": "2025-09-25T10:00:00Z",     // timestamp of the operation
+
     "nodes": [
       {
-        "id": "uuid",
-        "title": "string",
-        "description": "string",
-        "status": 0,
-        "dueDate": "2025-09-13T10:00:00Z",
-        "tags": ["backend", "urgent"],
-        "priority": 5,
-        "dependant": true,
-        "volume": 5,
-        "assignee": ["user-id"],
-        "pinned": false,
-        "collapsed": false,
-        "createdTime": "2025-09-13T10:00:00Z",
-        "lastEditedTime": "2025-09-13T10:00:00Z",
-        "version": 0,
-        "shareRoots": ["uuid1", "uuid2"]
+        "op": 0,                      // History operation type NODE_ADD=0
+        "before": {},
+        "after": {
+          "id": "uuid",
+          "title": "string",
+          "description": "string",
+          "status": 0,
+          "dueDate": "2025-09-13T10:00:00Z",
+          "tags": ["backend", "urgent"],
+          "priority": 5,
+          "dependent": true,
+          "volume": 5,
+          "assignee": ["user-id"],
+          "pinned": false,
+          "collapsed": false,
+          "createdTime": "2025-09-13T10:00:00Z",
+          "lastEditedTime": "2025-09-13T10:00:00Z",
+          "version": 0,
+          "shareRoots": ["uuid1", "uuid2"]
+        }
       },
-      { // Blocked target (parent node / supertask)
-        "id": "uuid",
-        "status": 2,  // ← Minimal snapshot: only affected props
-        "version": 3,
+      {
+        "op": 2,                      // History operation type NODE_STATUS=2
+        "before": {
+          "id": "uuid",
+          "status": 1,                // Node status InProgress=1
+          "version": 2
+        },
+        "after": {
+          "id": "uuid",
+          "status": 2,                // Node status Blocked=2
+          "version": 3,
+          "shareRoots": ["root-uuid-1", "root-uuid-2"],
+          "lastEditedTime": "2025-09-13T10:00:00Z"
+        }
       }
     ],
+
     "links": [
       {
-        "id": "uuid",
-        "source": "nodeId",
-        "target": "nodeId",
-        "type": 0,
-        "wasBlocker": false,
-        "version": 0
+        "op": 10,                      // History operation type LINK_ADD=10
+        "before": {},
+        "after": {
+          "id": "uuid",
+          "source": "nodeId",
+          "target": "nodeId",
+          "type": 0,
+          "wasBlocker": false,
+          "version": 0,
+          "shareRoots": ["uuid1", "uuid2"],
+          "createdTime": "2025-09-13T10:00:00Z",
+          "lastEditedTime": "2025-09-13T10:00:00Z"
+        }
       }
-    ]
+    ],
+    "user": [],
+    "access": [],
   }
 }
 ```
@@ -103,15 +133,7 @@ The diff includes the newly created node (with all props). Existing nodes that w
 Existing nodes that were modified as a side effect (e.g., a parent being blocked) are also included, but only with the updated fields.
 Each diff may include existing nodes with partial updates (only changed fields). Consumers must merge by id+version, not overwrite blindly.
 :::
-| Code | Error                    | Meaning                          |
-| ---- | ------------------------ | -------------------------------- |
-| 400  | `bad_request`            | Invalid payload                  |
-| 401  | `auth_missing`           | No token/auth header             |
-| 403  | `forbidden`              | ACL denied                       |
-| 404  | `not_found`              | Target node doesn’t exist        |
-| 409  | `conflict`               | Duplicate ID or version conflict |
-| 429  | `rate_limited`           | Too many requests                |
-| 500  | `internal.exception`     | Unexpected server failure        |
+**Errors:** see **[error codes](/api/error-codes)**
 
 ## Example (JavaScript)
 
@@ -174,3 +196,5 @@ if resp.status_code != 200:
 data = resp.json()
 print("Created node diff:", data["diff"])
 ```
+
+See also [Node concept](../../../concepts/nodes.md)

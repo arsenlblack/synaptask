@@ -22,4 +22,4 @@ This guide walks you through the fastest way to get started with SynapTask.
 5. **Fetch your graph**: either through REST `GET /api/graph` or socket `graph:get`.
 
 That's it — you can now explore nodes, links, and start building in 3D.
-Next, learn how to [create your first node](../guides/create-node)
+Next, learn how to [create your first node](../api/ws/node/add.md)

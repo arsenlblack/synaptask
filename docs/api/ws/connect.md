@@ -1,6 +1,6 @@
 ---
-title: WebSocket Connect
-slug: /api/ws/ws_connect
+title: connect
+slug: /api/ws/connect
 ---
 
 **Purpose:** Establish an authenticated Socket.IO session.
@@ -66,7 +66,7 @@ Partial node or link objects may be sent; only changed fields are guaranteed.
       "dueDate": "2025-09-13T10:00:00Z",
       "tags": ["backend", "urgent"],
       "priority": 5,
-      "dependant": true,
+      "dependent": true,
       "volume": 5,
       "assignee": [],
       "lastEditedTime": "2025-09-13T10:00:00Z",
@@ -103,5 +103,6 @@ On successful connect, the server emits `connected`. No graph data is sent autom
 ```json
 {"ok": false, "error": "forbidden.auth_missing", "message": "Authentication required"}
 ```
+See more **[error codes](/api/error-codes)**
 
 See also: [graph:get](../ws/get_graph.md).

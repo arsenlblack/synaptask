@@ -48,8 +48,6 @@ recovery until the user explicitly chooses to **Empty Trash**.
     items**.\
 -   Dedicated endpoints and events:
     -   `trash:list` → list items currently in Trash.\
-    -   `trash:restore` → restore an item by ID.\
-    -   `trash:purge` → permanently delete item by ID.\
     -   `trash:empty` → permanently delete all items in Trash.
 
 ------------------------------------------------------------------------

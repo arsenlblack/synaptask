@@ -3,7 +3,8 @@ title: graph:get
 slug: /api/ws/get_graph
 ---
 
-Retrieve a paginated slice of the authenticated user’s graph over WebSocket.
+Retrieve a paginated slice of the authenticated user’s graph over WebSocket. Equivalent to [GET /api/graph](/api/rest/get_graph) in REST.
+
 #### Rate limits
 * Maximum **5 requests per 10 seconds per user**.
 * If the limit is exceeded, the server still responds with an ack in the standard error shape:
@@ -51,7 +52,7 @@ Request part of the user’s graph over WebSocket.
         "type": 0,
         "tags": ["backend", "urgent"],
         "priority": 5,
-        "dependant": true,
+        "dependent": true,
         "volume": 5,
         "version": 0,
         "assignee": ["user1", "user2"],
@@ -60,6 +61,7 @@ Request part of the user’s graph over WebSocket.
         "ownerUsername": "BLACK",
         "ownerEmail": "example@synaptask.space",
         "publicToken": "string",
+        "publicDue": "2026-09-13T10:00:00Z",
         "x": 0.0,
         "y": 0.0,
         "z": 0.0,
@@ -113,14 +115,7 @@ Request part of the user’s graph over WebSocket.
   "trace_id": "f3a12bc9e1d4"
 }
 ```
-## Errors
-* Possible error codes returned by the server:
-* `bad_request.invalid_number` — `limit` or `offset` is not an integer.
-* `bad_request.out_of_range` — `limit` or `offset` is outside allowed bounds.
-* `forbidden.auth_missing` — user not authenticated.
-* `internal.malformed_response` — unexpected internal error.
-* `internal` — generic unexpected failure (server returned `{error: "internal.exception"}` etc.).
-All error responses always include a `trace_id` for log correlation.
+**Errors:** see **[error codes](/api/error-codes)**
 
 ## Rate Limits
 - `Maximum 5 requests per 10 seconds per user.`

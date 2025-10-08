@@ -23,31 +23,287 @@ const sidebars: SidebarsConfig = {
         'concepts/trash',
       ],
     },
+      'api/authentication',
+      'api/error_codes',
     {
       type: 'category',
-      label: 'API',
+      label: 'REST API',
       items: [
-        'api/authentication',
         {
-          type: 'category',
-          label: 'WebSocket',
-          items: [
-            'api/ws/connect',
-            'api/ws/get_graph',
-            'api/ws/node_add',
-            'api/ws/link_add',
-          ],
+          type: 'doc',
+          id: 'api/rest/get_health',
+          label: 'Healthcheck Endpoint',
+        },
+        {
+          type: 'doc',
+          id: 'api/rest/get_graph',
+          label: 'Get graph',
         },
         {
           type: 'category',
-          label: 'REST',
+          label: 'Node endpoints',
           items: [
-            'api/rest/get_graph',
-            'api/rest/get_health',
-            'api/rest/post_node',
-            'api/rest/post_link',
-          ],
+            {
+              type: 'doc',
+              id: 'api/rest/node/add',
+              label: 'Add',
+            },
+            {
+              type: 'doc',
+              id: 'api/rest/node/update',
+              label: 'Update',
+            },
+            {
+              type: 'doc',
+              id: 'api/rest/node/trash',
+              label: 'Trash',
+            },
+            {
+              type: 'doc',
+              id: 'api/rest/node/restore',
+              label: 'Restore',
+            },
+            {
+              type: 'doc',
+              id: 'api/rest/node/delete',
+              label: 'Delete',
+            },
+            {
+              type: 'doc',
+              id: 'api/rest/node/publish',
+              label: 'Publish',
+            },
+            {
+              type: 'doc',
+              id: 'api/rest/node/publish_update',
+              label: 'Update published',
+            },
+            {
+              type: 'doc',
+              id: 'api/rest/node/unpublish',
+              label: 'Unpublish',
+            },
+            {
+              type: 'doc',
+              id: 'api/rest/node/embed',
+              label: 'Embed',
+            },
+            {
+              type: 'doc',
+              id: 'api/rest/node/unembed',
+              label: 'Unembed',
+            },
+            {
+              type: 'doc',
+              id: 'api/rest/node/access',
+              label: 'Share',
+            },
+            {
+              type: 'doc',
+              id: 'api/rest/node/access_update',
+              label: 'Update sharing',
+            },
+            {
+              type: 'doc',
+              id: 'api/rest/node/access_revoke',
+              label: 'Revoke sharing',
+            },
+          ]
         },
+        {
+          type: 'category',
+          label: 'Link endpoints',
+          items: [
+            {
+              type: 'doc',
+              id: 'api/rest/link/add',
+              label: 'Add',
+            },
+            {
+              type: 'doc',
+              id: 'api/rest/link/update',
+              label: 'Update',
+            },
+            {
+              type: 'doc',
+              id: 'api/rest/link/swap',
+              label: 'Swap',
+            },
+            {
+              type: 'doc',
+              id: 'api/rest/link/trash',
+              label: 'Move to trash',
+            },
+            {
+              type: 'doc',
+              id: 'api/rest/link/restore',
+              label: 'Restore',
+            },
+            {
+              type: 'doc',
+              id: 'api/rest/link/delete',
+              label: 'Delete',
+            },
+          ]
+        },
+        //{
+        //  type: 'category',
+        //  label: '/api/history',
+        //  items: [
+        //    //'api/rest/get_history',
+        //    //'api/rest/post_history',
+        //  ]
+        //},
+        ////'api/rest/get_trash',
+        //{
+        //  type: 'category',
+        //  label: '/api/access',
+        //  items: [
+        //    //'api/rest/get_accesses',
+        //    //'api/rest/post_grant',
+        //  ]
+        //},
+      ],
+    },
+    {
+      type: 'category',
+      label: 'WebSocket',
+      items: [
+        {
+          type: 'doc',
+          id: 'api/ws/connect',
+          label: 'Connection',
+        },
+        {
+          type: 'doc',
+          id: 'api/ws/get_graph',
+          label: 'Get all graph',
+        },
+        {
+          type: 'category',
+          label: 'Node events',
+          items: [
+            {
+              type: 'doc',
+              id: 'api/ws/node/add',
+              label: 'Add',
+            },
+            {
+              type: 'doc',
+              id: 'api/ws/node/update',
+              label: 'Update',
+            },
+            {
+              type: 'doc',
+              id: 'api/ws/node/trash',
+              label: 'Move to trash',
+            },
+            {
+              type: 'doc',
+              id: 'api/ws/node/restore',
+              label: 'Restore',
+            },
+            {
+              type: 'doc',
+              id: 'api/ws/node/delete',
+              label: 'Create',
+            },
+            {
+              type: 'doc',
+              id: 'api/ws/node/publish',
+              label: 'Publish',
+            },
+            {
+              type: 'doc',
+              id: 'api/ws/node/publish_update',
+              label: 'Update publushed',
+            },
+            {
+              type: 'doc',
+              id: 'api/ws/node/unpublish',
+              label: 'Unpublish',
+            },
+            {
+              type: 'doc',
+              id: 'api/ws/node/embed',
+              label: 'Embed',
+            },
+            {
+              type: 'doc',
+              id: 'api/ws/node/unembed',
+              label: 'Unembed',
+            },
+            {
+              type: 'doc',
+              id: 'api/ws/node/access',
+              label: 'Share',
+            },
+            {
+              type: 'doc',
+              id: 'api/ws/node/access_update',
+              label: 'Update sharing',
+            },
+            {
+              type: 'doc',
+              id: 'api/ws/node/access_revoke',
+              label: 'Revoke sharing',
+            },
+          ]
+        },
+        {
+          type: 'category',
+          label: 'Link events',
+          items: [
+            {
+              type: 'doc',
+              id: 'api/ws/link/add',
+              label: 'Add',
+            },
+            {
+              type: 'doc',
+              id: 'api/ws/link/update',
+              label: 'Update',
+            },
+            {
+              type: 'doc',
+              id: 'api/ws/link/swap',
+              label: 'Swap',
+            },
+            {
+              type: 'doc',
+              id: 'api/ws/link/trash',
+              label: 'Move to trash',
+            },
+            {
+              type: 'doc',
+              id: 'api/ws/link/restore',
+              label: 'Restore',
+            },
+            {
+              type: 'doc',
+              id: 'api/ws/link/delete',
+              label: 'Delete',
+            },
+          ]
+        },
+        //'api/ws/get_trash',
+        // {
+        //   type: 'category',
+        //   label: 'history:',
+        //   items: [
+        //     //'api/ws/get_history',
+        //     //'api/ws/history_undo',
+        //     //'api/ws/history_redo',
+        //   ]
+        // },
+        // {
+        //   type: 'category',
+        //   label: 'access:',
+        //   items: [
+        //     //'api/ws/get_accesses',
+        //     //'api/ws/grant',
+        //   ]
+        // }
       ],
     },
   ],
