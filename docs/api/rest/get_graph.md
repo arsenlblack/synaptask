@@ -1,5 +1,5 @@
 ---
-title:  GET /api/graph (full graph)
+title:  GET /api/graph
 slug: /api/rest/get_graph
 ---
 

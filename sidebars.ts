@@ -40,6 +40,11 @@ const sidebars: SidebarsConfig = {
           label: 'Get graph',
         },
         {
+          type: 'doc',
+          id: 'api/rest/get_trash',
+          label: 'Get trash',
+        },
+        {
           type: 'category',
           label: 'Node endpoints',
           items: [
@@ -146,23 +151,27 @@ const sidebars: SidebarsConfig = {
             },
           ]
         },
-        //{
-        //  type: 'category',
-        //  label: '/api/history',
-        //  items: [
-        //    //'api/rest/get_history',
-        //    //'api/rest/post_history',
-        //  ]
-        //},
-        ////'api/rest/get_trash',
-        //{
-        //  type: 'category',
-        //  label: '/api/access',
-        //  items: [
-        //    //'api/rest/get_accesses',
-        //    //'api/rest/post_grant',
-        //  ]
-        //},
+        {
+          type: 'category',
+          label: 'History',
+          items: [
+            {
+              type: 'doc',
+              id: 'api/rest/history/get',
+              label: 'Get',
+            },
+            {
+              type: 'doc',
+              id: 'api/rest/history/undo',
+              label: 'Undo',
+            },
+            {
+              type: 'doc',
+              id: 'api/rest/history/redo',
+              label: 'Redo',
+            },
+          ]
+        },
       ],
     },
     {
@@ -177,7 +186,12 @@ const sidebars: SidebarsConfig = {
         {
           type: 'doc',
           id: 'api/ws/get_graph',
-          label: 'Get all graph',
+          label: 'Get graph',
+        },
+        {
+          type: 'doc',
+          id: 'api/ws/get_trash',
+          label: 'Get trash',
         },
         {
           type: 'category',
@@ -286,24 +300,27 @@ const sidebars: SidebarsConfig = {
             },
           ]
         },
-        //'api/ws/get_trash',
-        // {
-        //   type: 'category',
-        //   label: 'history:',
-        //   items: [
-        //     //'api/ws/get_history',
-        //     //'api/ws/history_undo',
-        //     //'api/ws/history_redo',
-        //   ]
-        // },
-        // {
-        //   type: 'category',
-        //   label: 'access:',
-        //   items: [
-        //     //'api/ws/get_accesses',
-        //     //'api/ws/grant',
-        //   ]
-        // }
+        {
+          type: 'category',
+          label: 'History',
+          items: [
+            {
+              type: 'doc',
+              id: 'api/ws/history/get',
+              label: 'Get',
+            },
+            {
+              type: 'doc',
+              id: 'api/ws/history/undo',
+              label: 'Undo',
+            },
+            {
+              type: 'doc',
+              id: 'api/ws/history/redo',
+              label: 'Redo',
+            },
+          ]
+        },
       ],
     },
   ],

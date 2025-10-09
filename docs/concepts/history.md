@@ -68,11 +68,12 @@ Operation codes across all entity types:
 * `5 = NODE_DELETE`
 * `6 = NODE_PUBLISH`
 * `10 = LINK_ADD`
-* `11 = LINK_UPDATE`
-* `12 = LINK_TRASH`
-* `13 = LINK_RESTORE`
-* `14 = LINK_DELETE`
-* `15 = LINK_SWAP`
+* `11 = LINK_TYPE`
+* `12 = LINK_UPDATE`
+* `13 = LINK_TRASH`
+* `14 = LINK_RESTORE`
+* `15 = LINK_DELETE`
+* `16 = LINK_SWAP`
 * `20 = GRANT_UPSERT`
 * `21 = GRANT_UPDATE`
 * `22 = GRANT_DELETE`
