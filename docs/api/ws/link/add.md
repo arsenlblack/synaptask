@@ -14,9 +14,7 @@ Create a link between two nodes via WebSocket. Equivalent to [POST /api/link](/a
 * `type`:
   * `1` → secondary link (non-blocking).
   * `0 (default)` → primary link (blocking): source blocks target.  
-    Will be automaticly changed to `1` (secondary):
-    * If target node `dependent=false`.
-    * If caller has **viewer** or lower access for `target` node.
+    Will be automaticly changed to `1` (secondary) if caller has **viewer** or lower access for `target` node.
 * `private`:
   * `true` → visible only for owner.
   * `false (default)` → visible for everyone.

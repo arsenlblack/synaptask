@@ -52,7 +52,7 @@ Permanently delete a node. Equivalent to [node:delete](/api/ws/node/delete) in W
           "type": 0,
           "tags": ["backend", "urgent"],
           "priority": 5,
-          "dependent": true,
+          "independent": false,
           "volume": 5,
           "assignee": [],
           "pinned": false,

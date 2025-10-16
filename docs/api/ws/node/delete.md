@@ -46,7 +46,7 @@ Permanently delete a node via WebSocket event. Equivalent to [DELETE /api/node](
           "type": 0,
           "tags": ["backend", "urgent"],
           "priority": 5,
-          "dependent": true,
+          "independent": false,
           "volume": 5,
           "assignee": [],
           "pinned": false,

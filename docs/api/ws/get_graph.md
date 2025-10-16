@@ -41,47 +41,45 @@ Request part of the user’s graph over WebSocket.
   "ok": true,
   "hasMore": true,
   "trace_id": "f3a12bc9e1d4",
-  "graph": {
-    "nodes": [
-      {
-        "id": "<uuid>",
-        "title": "string",
-        "description": "string",
-        "status": 0,
-        "dueDate": "2025-09-13T10:00:00Z", // ISO-8601 strings with Z suffix
-        "type": 0,
-        "tags": ["backend", "urgent"],
-        "priority": 5,
-        "dependent": true,
-        "volume": 5,
-        "version": 0,
-        "assignee": ["user1", "user2"],
-        "createdTime": "2025-09-13T10:00:00Z", // ISO-8601 strings with Z suffix
-        "lastEditedTime": "2025-09-13T10:00:00Z", // ISO-8601 strings with Z suffix
-        "ownerUsername": "BLACK",
-        "ownerEmail": "example@synaptask.space",
-        "publicToken": "string",
-        "publicDue": "2026-09-13T10:00:00Z",
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0,
-        "pinned": false,
-        "collapsed": false,
-        "access": 0,
-        "shareRoots": ["uuid1", "uuid2"]
-      }
-    ],
-    "links": [
-      {
-        "id": "<uuid>",
-        "source": "<uuid>",
-        "target": "<uuid>",
-        "type": 0,
-        "version": 0,
-        "wasBlocker": false
-      }
-    ]
-  }
+  "nodes": [
+    {
+      "id": "<uuid>",
+      "title": "string",
+      "description": "string",
+      "status": 0,
+      "dueDate": "2025-09-13T10:00:00Z", // ISO-8601 strings with Z suffix
+      "type": 0,
+      "tags": ["backend", "urgent"],
+      "priority": 5,
+      "independent": false,
+      "volume": 5,
+      "version": 0,
+      "assignee": ["user1", "user2"],
+      "createdTime": "2025-09-13T10:00:00Z", // ISO-8601 strings with Z suffix
+      "lastEditedTime": "2025-09-13T10:00:00Z", // ISO-8601 strings with Z suffix
+      "ownerUsername": "BLACK",
+      "ownerEmail": "example@synaptask.space",
+      "publicToken": "string",
+      "publicDue": "2026-09-13T10:00:00Z",
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "pinned": false,
+      "collapsed": false,
+      "access": 0,
+      "shareRoots": ["uuid1", "uuid2"]
+    }
+  ],
+  "links": [
+    {
+      "id": "<uuid>",
+      "source": "<uuid>",
+      "target": "<uuid>",
+      "type": 0,
+      "version": 0,
+      "wasBlocker": false
+    }
+  ]
 }
 ```
 
@@ -142,9 +140,8 @@ function requestGraph() {
       return;
     }
 
-    const graph = ack.graph || {};
-    const nodes = graph.nodes || [];
-    const links = graph.links || [];
+    const nodes = ack.nodes || [];
+    const links = ack.links || [];
 
     allNodes.push(...nodes);
     allLinks.push(...links);
@@ -202,9 +199,8 @@ def request_graph():
             sio.disconnect()
             return
 
-        graph = ack.get("graph", {})
-        nodes = graph.get("nodes", [])
-        links = graph.get("links", [])
+        nodes = ack.get("nodes", [])
+        links = ack.get("links", [])
 
         all_nodes.extend(nodes)
         all_links.extend(links)

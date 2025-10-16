@@ -41,6 +41,11 @@ const sidebars: SidebarsConfig = {
         },
         {
           type: 'doc',
+          id: 'api/rest/get_branch',
+          label: 'Get branch',
+        },
+        {
+          type: 'doc',
           id: 'api/rest/get_trash',
           label: 'Get trash',
         },
@@ -190,6 +195,11 @@ const sidebars: SidebarsConfig = {
         },
         {
           type: 'doc',
+          id: 'api/ws/get_branch',
+          label: 'Get branch',
+        },
+        {
+          type: 'doc',
           id: 'api/ws/get_trash',
           label: 'Get trash',
         },
@@ -220,7 +230,7 @@ const sidebars: SidebarsConfig = {
             {
               type: 'doc',
               id: 'api/ws/node/delete',
-              label: 'Create',
+              label: 'Delete',
             },
             {
               type: 'doc',

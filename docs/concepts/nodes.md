@@ -18,7 +18,7 @@ Nodes are the fundamental units in SynapTask — tasks, cards, documents, or ide
 - **type**: integer (custom type/category)
 - **tags**: JSON array of strings e.g. `["book", "red"]`
 - **priority**: integer `0–9`
-- **dependent**: boolean (whether the node can be blocked by downstream dependencies)
+- **independent**: boolean (whether the node will not be blocked by downstream dependencies)
 - **volume**: integer (visual size; also used to hint priority in layout)
 - **version**: integer (increments on changes; used as history/optimistic locking guard)
 - **assignee**: JSON array of strings (names, emails, or usernames), e.g. `["jane@x.com", "john"]`

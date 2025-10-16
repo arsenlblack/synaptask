@@ -117,7 +117,7 @@ Move a node into the trash (soft delete). Equivalent to [node:trash](/api/ws/nod
 :::note
 The diff includes only changed fields in `before` and `after`.  
 Consumers must merge by `id+version`, not overwrite blindly.  
-Side effects (e.g., dependent status updates) will also be included.
+Side effects (e.g., status updates) will also be included.
 :::
 
 **Errors:** see **[error codes](/api/error-codes)**

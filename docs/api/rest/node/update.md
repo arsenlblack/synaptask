@@ -27,16 +27,7 @@ Update fields of an existing node. Equivalent to [node:update](/api/ws/node/upda
 {
   "id": "<uuid>",              // required
   "title": "string",
-  "description": "string",
   "status": 3,                // 3=Completed
-  "dueDate": "2025-09-13T10:00:00Z",
-  "tags": ["backend", "urgent"],
-  "priority": 5,
-  "dependent": true,
-  "volume": 5,
-  "assignee": ["user-id"],
-  "pinned": false,
-  "collapsed": false
 }
 ```
 
@@ -79,7 +70,7 @@ Update fields of an existing node. Equivalent to [node:update](/api/ws/node/upda
         "after": {
           "id": "uuid",
           "title": "New title",
-          "status": 1,        // 3=Completed
+          "status": 3,        // 3=Completed
           "version": 6,
           "shareRoots": ["root-uuid-1", "root-uuid-2"],
           "lastEditedTime": "2025-09-25T10:00:00Z"

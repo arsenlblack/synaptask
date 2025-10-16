@@ -45,7 +45,7 @@ slug: /api/error-codes
 | 400 | `invalid_priority` | Priority must be int 0–9. |
 | 400 | `invalid_volume` | Volume must be int 0–9. |
 | 400 | `volume_out_of_range` | Volume must be 0–9. |
-| 400 | `invalid_dependent` | `dependent` must be boolean. |
+| 400 | `invalid_independent` | `independent` must be boolean. |
 | 400 | `invalid_pinned` | `pinned` must be boolean. |
 | 400 | `invalid_collapsed` | `collapsed` must be boolean. |
 | 400 | `invalid_assignee` | Assignee must be list of usernames/strings. |
@@ -81,7 +81,6 @@ slug: /api/error-codes
 | 400 | `already_trashed_link` | Link already in trash. |
 | 400 | `link_in_trash` | Can't edit link in trash. |
 | 400 | `not_trashed_link` | Link not in trash. |
-| 400 | `target_independent` | Target is independent (`dependent=false`); blocking links allowed only for dependent nodes. |
 
 ---
 

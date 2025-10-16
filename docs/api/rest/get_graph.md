@@ -27,47 +27,45 @@ Retrieve the portion of the task graph visible to the authenticated user. Equiva
 {
   "ok": true,
   "hasMore": true,
-  "graph": {
-    "nodes": [
-      {
-        "id": "uuid",
-        "title": "string",
-        "description": "string",
-        "status": 0,
-        "dueDate": "2025-09-13T10:00:00Z",
-        "type": 0,
-        "tags": ["backend", "urgent"],
-        "priority": 5,
-        "dependent": true,
-        "volume": 5,
-        "version": 0,
-        "assignee": [],
-        "createdTime": "2025-09-13T10:00:00Z",
-        "lastEditedTime": "2025-09-13T10:00:00Z",
-        "ownerUsername": "BLACK",
-        "ownerEmail": "black@synaptask.space",
-        "publicToken": "string",
-        "publicDue": "2026-09-13T10:00:00Z",
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0,
-        "pinned": false,
-        "collapsed": false,
-        "access": 0,
-        "shareRoots": ["uuid1", "uuid2"]
-      }
-    ],
-    "links": [
-      {
-        "id": "uuid",
-        "source": "uuid",
-        "target": "uuid",
-        "type": 0,
-        "version": 0,
-        "wasBlocker": false
-      }
-    ]
-  }
+  "nodes": [
+    {
+      "id": "uuid",
+      "title": "string",
+      "description": "string",
+      "status": 0,
+      "dueDate": "2025-09-13T10:00:00Z",
+      "type": 0,
+      "tags": ["backend", "urgent"],
+      "priority": 5,
+      "independent": false,
+      "volume": 5,
+      "version": 0,
+      "assignee": [],
+      "createdTime": "2025-09-13T10:00:00Z",
+      "lastEditedTime": "2025-09-13T10:00:00Z",
+      "ownerUsername": "BLACK",
+      "ownerEmail": "black@synaptask.space",
+      "publicToken": "string",
+      "publicDue": "2026-09-13T10:00:00Z",
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "pinned": false,
+      "collapsed": false,
+      "access": 0,
+      "shareRoots": ["uuid1", "uuid2"]
+    }
+  ],
+  "links": [
+    {
+      "id": "uuid",
+      "source": "uuid",
+      "target": "uuid",
+      "type": 0,
+      "version": 0,
+      "wasBlocker": false
+    }
+  ]
 }
 ```
 **Errors:** see **[error codes](/api/error-codes)**
@@ -95,10 +93,9 @@ async function fetchGraph(apiBaseUrl, apiToken) {
     }
 
     const data = await resp.json();
-    const graph = data.graph;
 
-    allNodes.push(...(graph.nodes || []));
-    allLinks.push(...(graph.links || []));
+    allNodes.push(...(data.nodes || []));
+    allLinks.push(...(data.links || []));
 
     if (data.hasMore) {
       offset += limit;
@@ -149,10 +146,9 @@ while True:
         raise RuntimeError(f"Graph request failed: {resp.status_code} {err}")
 
     data = resp.json()
-    graph = data.get("graph", {})
 
-    nodes = graph.get("nodes", [])
-    links = graph.get("links", [])
+    nodes = data.get("nodes", [])
+    links = data.get("links", [])
 
     all_nodes.extend(nodes)
     all_links.extend(links)

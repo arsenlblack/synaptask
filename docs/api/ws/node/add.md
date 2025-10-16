@@ -12,7 +12,6 @@ Create a new node via WebSocket event. Equivalent to [POST /api/node](/api/rest/
   * If you have **editor** access on the target: new node will **inherit** the owner and ACL from the parent node.
   * If you have **viewer** or less access on the target: you will be owner of node and link will be downgraded to **secondary** `type=1`.
   * `no access` → `forbidden` error.  
-  * A **primary** link `type=0` is created if the parent is `dependent=true`, otherwise link will downgraded **secondary** link `type=1`.
 * If no `target` is provided, node is created **stand-alone** under the caller’s ownership.
 * History batch records node creation, the link (if any) and all side effects like blocking parent (if any).
 
@@ -26,7 +25,7 @@ Create a new node via WebSocket event. Equivalent to [POST /api/node](/api/rest/
   "dueDate": "2025-09-13T10:00:00Z",
   "tags": ["backend", "urgent"],
   "priority": 5,
-  "dependent": true,
+  "independent": false,
   "volume": 5,
   "assignee": ["user1", "user2"],
   "pinned": false,
@@ -59,7 +58,7 @@ Create a new node via WebSocket event. Equivalent to [POST /api/node](/api/rest/
           "dueDate": "2025-09-13T10:00:00Z",
           "tags": ["backend", "urgent"],
           "priority": 5,
-          "dependent": true,
+          "independent": false,
           "volume": 5,
           "assignee": ["user-id"],
           "pinned": false,

@@ -25,7 +25,6 @@ Create a new node, optionally under a parent node. Equivalent to [node:add](/api
 
   This way, **you remain the owner** of the new node, while still preserving graph consistency and task dependencies.
   :::
-* A primary link (type=0) is created if the parent is marked as `dependent=true`, otherwise a secondary link (type=1).
 * History batch records node creation, the link (if any) and all side effects like blocking parent (if any).
 
 ## REST API
@@ -45,7 +44,7 @@ Create a new node, optionally under a parent node. Equivalent to [node:add](/api
   "dueDate": "2025-09-13T10:00:00Z",
   "tags": ["backend", "urgent"],
   "priority": 5,
-  "dependent": true,
+  "independent": false,
   "volume": 5,
   "assignee": ["user-id"],
   "pinned": false,
@@ -78,7 +77,7 @@ Create a new node, optionally under a parent node. Equivalent to [node:add](/api
           "dueDate": "2025-09-13T10:00:00Z",
           "tags": ["backend", "urgent"],
           "priority": 5,
-          "dependent": true,
+          "independent": false,
           "volume": 5,
           "assignee": ["user-id"],
           "pinned": false,

@@ -12,9 +12,7 @@ Update an existing link via WebSocket. Equivalent to [PUT /api/link](/api/rest/l
 * `type`:
   * `1` → secondary link (non-blocking).
   * `0 (default)` → primary link (blocking): source blocks target.  
-    Not allowed:
-    * If target node `dependent=false`.
-    * If caller has **viewer** or lower access for `target` node.
+    Not allowed if caller has **viewer** or lower access for `target` node.
 * `private`:
   * `true` → visible only for owner.
   * `false` → visible for everyone.

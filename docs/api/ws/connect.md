@@ -66,7 +66,7 @@ Partial node or link objects may be sent; only changed fields are guaranteed.
       "dueDate": "2025-09-13T10:00:00Z",
       "tags": ["backend", "urgent"],
       "priority": 5,
-      "dependent": true,
+      "independent": false,
       "volume": 5,
       "assignee": [],
       "lastEditedTime": "2025-09-13T10:00:00Z",

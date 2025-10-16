@@ -16,17 +16,8 @@ Update fields of an existing node via WebSocket event. Equivalent to [PUT /api/n
 ```json
 {
   "id": "<uuid>",          // required
-  "title": "string",
-  "description": "string",
-  "status": 1,
-  "dueDate": "2025-10-01T12:00:00Z",
-  "tags": ["backend", "urgent"],
-  "priority": 3,
-  "dependent": false,
-  "volume": 8,
-  "assignee": ["user1"],
-  "pinned": true,
-  "collapsed": false
+  "title": "New title",
+  "status": 3,
 }
 ```
 
@@ -55,6 +46,7 @@ Update fields of an existing node via WebSocket event. Equivalent to [PUT /api/n
           "id": "uuid",
           "title": "New title",
           "version": 5,
+          "shareRoots": ["root-uuid-1", "root-uuid-2"],
           "lastEditedTime": "2025-09-25T10:00:00Z"
         }
       },
@@ -70,6 +62,7 @@ Update fields of an existing node via WebSocket event. Equivalent to [PUT /api/n
           "title": "New title",
           "status": 3,        // 3=Completed
           "version": 6,
+          "shareRoots": ["root-uuid-1", "root-uuid-2"],
           "lastEditedTime": "2025-09-25T10:00:00Z"
         }
       },
@@ -85,6 +78,7 @@ Update fields of an existing node via WebSocket event. Equivalent to [PUT /api/n
           "title": "New title",
           "status": 1,        // 1=Available
           "version": 11,
+          "shareRoots": ["root-uuid-1", "root-uuid-2"],
           "lastEditedTime": "2025-09-25T10:00:00Z"
         }
       }

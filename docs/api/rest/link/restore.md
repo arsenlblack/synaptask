@@ -49,10 +49,20 @@ Restore an existing link from the trash. Equivalent to [link:restore](/api/ws/li
         },
         "after": {
           "id": "uuid",
-          "inTrash": false,
-          "version": 5,
+          "source": "node-uuid-A",
+          "target": "node-uuid-B",
+          "type": 0,
+          "wasBlocker": true,
+          "private": true,
+          "version": 1,
           "shareRoots": ["root-uuid-1", "root-uuid-2"],
-          "lastEditedTime": "2025-09-25T11:00:00Z"
+          "createdTime": "2025-09-13T10:00:00Z",
+          "lastEditedTime": "2025-09-13T10:00:00Z",
+          "lastBatchID": "batch-uuid",
+          "version": 5,
+          "inTrash": false,
+          "shareRoots": ["root-uuid-1", "root-uuid-2"],
+          "lastEditedTime": "2025-09-13T10:00:00Z"
         }
       }
     ],

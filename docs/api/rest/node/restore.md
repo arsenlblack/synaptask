@@ -49,11 +49,32 @@ Restore a node from the **trash**. Equivalent to [node:restore](/api/ws/node/res
           "inTrash": true,
           "version": 4
         },
-        "after": {
+        "after": { // Hidrated
           "id": "uuid",
+          "title": "string",
+          "description": "string",
+          "status": 0,
+          "dueDate": "2025-09-13T10:00:00Z",
+          "tags": ["backend", "urgent"],
+          "priority": 5,
+          "independent": false,
+          "volume": 5,
+          "type": 0,
+          "assignee": [],
           "inTrash": false,
           "version": 5,
+          "publicToken": "string",
+          "publicDue": "2026-09-13T10:00:00Z",
+          "ownerUsername": "BLACK",
+          "ownerEmail": "black@synaptask.space",
+          "createdTime": "2025-09-13T10:00:00Z",
           "lastEditedTime": "2025-09-25T11:00:00Z",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "access": 0,
+          "pinned": false,
+          "collapsed": false,
           "shareRoots": ["uuid1", "uuid2"]
         }
       },
@@ -74,7 +95,7 @@ Restore a node from the **trash**. Equivalent to [node:restore](/api/ws/node/res
       }
     ],
     "links": [
-      {  // side effect
+      {
         "op": 13,                            // History operation type LINK_RESTORE=13
         "before": {
           "id": "uuid",
@@ -83,6 +104,16 @@ Restore a node from the **trash**. Equivalent to [node:restore](/api/ws/node/res
         },
         "after": {
           "id": "uuid",
+          "source": "node-uuid-A",
+          "target": "node-uuid-B",
+          "type": 0,
+          "wasBlocker": true,
+          "private": true,
+          "version": 1,
+          "shareRoots": ["root-uuid-1", "root-uuid-2"],
+          "createdTime": "2025-09-13T10:00:00Z",
+          "lastEditedTime": "2025-09-13T10:00:00Z",
+          "lastBatchID": "batch-uuid",
           "version": 5,
           "inTrash": false,
           "shareRoots": ["root-uuid-1", "root-uuid-2"],
@@ -97,11 +128,21 @@ Restore a node from the **trash**. Equivalent to [node:restore](/api/ws/node/res
           "version": 8
         },
         "after": {
-          "id": "uuid2",
-          "inTrash": false,
-          "version": 9,
+          "id": "uuid",
+          "source": "node-uuid-A",
+          "target": "node-uuid-B",
+          "type": 0,
+          "wasBlocker": true,
+          "private": true,
+          "version": 1,
           "shareRoots": ["root-uuid-1", "root-uuid-2"],
-          "lastEditedTime": "2025-09-13T10:00:00Z"
+          "createdTime": "2025-09-13T10:00:00Z",
+          "lastEditedTime": "2025-09-13T10:00:00Z",
+          "lastBatchID": "batch-uuid",
+          "version": 9,
+          "inTrash": false,
+          "shareRoots": ["root-uuid-1", "root-uuid-2"],
+          "lastEditedTime": "2025-09-13T10:00:00Z",
         }
       }
     ],
