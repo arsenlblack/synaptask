@@ -333,6 +333,7 @@ const sidebars: SidebarsConfig = {
         },
       ],
     },
+    'changelog',
   ],
 };
 
